@@ -20,6 +20,7 @@ class TodoItem extends Component {
     let lkey = this.props.list.key;
     let ikey = item.key;
     let t_style;
+    let circle;
     let green_class;
     let white_class;
     const t_style_1=
@@ -32,9 +33,11 @@ class TodoItem extends Component {
         'color': 'black'
     };
     if(item.isCheck===1){
+      circle = green_circle;
       t_style=t_style_1;
     }
     else{
+      circle = white_circle;
       t_style=t_style_2;
     }
     return (
@@ -45,8 +48,8 @@ class TodoItem extends Component {
           alt='X' 
           onClick={()=>{this.deleteItem(lkey, ikey)}}/>
         <div onClick={()=>{this.checkItem(lkey, ikey)}} style={t_style}>
-          <img src={green_circle} className='green-logo' alt='o'/>
-          <img src={white_circle} className='white-logo' alt='o'/>
+          <img src={circle} className='green-logo' alt='o'/>
+          <img src={circle} className='white-logo' alt='o'/>
           {item.text}
         </div>
       </div>
