@@ -35,10 +35,19 @@ class TodoList extends Component {
       titleClass='title-text-editable';
     return (  
       <div key={list.key} className="ListBox">
-          <div className='list-title'>
-            <a className={titleClass}>{list.text}</a>
+          <div className='list-title'
+            onKeyPress={
+              (e)=>{
+                let key= e.keyCode || e.which;
+                if(key===13){
+                  this.changeList(list.key);
+                }
+              }
+            }
+          >
             <img src={deleteLogo} alt='X' className='delete-logo' onClick={()=>this.deleteList(list.key)}/>
             <img src={editLogo} alt='Edit' className='delete-logo' onClick={()=>this.changeList(list.key)}/>
+            <div className={titleClass}>{list.text}</div>
           </div>
           <input 
             ref={a=> {inputItem = a;} } 
@@ -50,7 +59,7 @@ class TodoList extends Component {
                 }
               }
             }/>
-          <button onClick={()=>this.addItem(list.key, inputItem.value)}>Item+</button>
+          <button onClick={()=>this.addItem(list.key, inputItem.value)}>+</button>
           <TodoItem list={list} checkItem={this.checkItem} deleteItem={this.deleteItem}></TodoItem>
       </div>
     )

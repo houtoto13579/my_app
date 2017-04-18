@@ -37,7 +37,20 @@
 .App-intro {
   font-size: large;
 }
-
+header .firstline{
+  position:relative;
+}
+header .count{
+  background: pink;
+  position: absolute;
+  bottom:0;
+  margin: 5px;
+  box-shadow: 0 0 2px
+}
+header p{
+  text-align: left;
+  margin: 1px;
+}
 header h1{
     background-color: white;
     text-align: center;
@@ -45,20 +58,65 @@ header h1{
     padding: 0px;
     color: black;
 }
+header button{
+  font-size: large;
+  background-color: #00896C;
+  color: white;
+  border: none;
+  margin: 1vh;
+  border-radius: 3px;
+}
+header button:hover{
+  background-color: #A8D8B9;
+  color: white;
+  border-color: darkgreen;
+  border-width: 10px solid;
+  margin: 1vh;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
 .ListGroup{
+
+    text-align: left;
     content:"";
     min-height: 100vh;
     min-width: 90vh;
     background-color: #A8D8B9;
 }
+.ListGroup button{
+  font-size: medium;
+  background-color: #00896C;
+  color: white;
+  border: none;
+  margin: 1vh;
+  border-radius: 3px;
+}
+.ListGroup button:hover{
+  background-color: #A8D8B9;
+  color: white;
+  border-color: darkgreen;
+  border-width: 10px solid;
+  margin: 1vh;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+
+.ListGroup input{
+  height: auto;
+  width: 80%;
+  position: relative;
+}
 .ListGroup .ListBox{
-    width: 30%;
-    margin: 2px;
-    height: 50vh;
-    display:inline-block;
-    vertical-align:top;
-    background-color: antiquewhite;
+  text-align: center;
+  width: 32%;
+  margin: 0.5%;
+  height: 50vh;
+  display:inline-block;
+  vertical-align:top;
+  background-color: antiquewhite;
+  box-shadow: 0px 0px 3px
 }
 .ListGroup .ListBox .list-title{
   min-height: 30px;
@@ -72,15 +130,22 @@ header h1{
   position: relative;
   overflow-y: scroll;
 }
+.ListGroup .ListBox .delete-logo{
+  float:right
+}
+
 .title-text-editable{
+  position: center;
+  margin: 0 auto;
+  height: 30px;
+  width: 50%;
   -webkit-user-modify: read-write;
+  color: #00896C;
   background-color: white;
-  cursor: pointer;
 }
 .title-text-readonly{
   -webkit-user-modify: read-only;
 }
-
 .Items{
   text-align: center;
 }

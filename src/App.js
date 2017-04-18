@@ -7,7 +7,11 @@ class App extends Component {
     super();
     this.state = {
       list: [],
-      count: 0
+      count: 0,
+      listCount: 0,
+      itemCount: 0,
+      itemFinished: 0,
+      itemUnfinish: 0,
     }
     this.onClick = this.onClick.bind(this);
     this.addList = this.addList.bind(this);
@@ -16,6 +20,7 @@ class App extends Component {
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.checkItem = this.checkItem.bind(this);
+    this.countAll = this.countAll.bind(this);
   }
   findTarget(array, key){
     for (let i = 0, l = array.length; i < l; i++) {
@@ -29,6 +34,7 @@ class App extends Component {
     this.setState({
       count: this.state.count+1
     })
+    this.countAll();
   }
   addList(){
     let listArr = this.state.list;
@@ -43,7 +49,7 @@ class App extends Component {
     )
     this.setState({
       list: listArr
-    })
+    }, this.countAll)
   }
   addItem(key, itemText){
     let listArr = this.state.list;
@@ -59,7 +65,7 @@ class App extends Component {
     listArr[this.findTarget(listArr,key)]=targetList;
     this.setState({
       list:listArr
-    })
+    }, this.countAll)
   }
   deleteList(lkey){
     let listArr = this.state.list;
@@ -68,7 +74,7 @@ class App extends Component {
     });
     this.setState({
       list:remainder
-    })
+    },this.countAll)
   }
   changeList(lkey){
     let listArr = this.state.list;
@@ -80,7 +86,7 @@ class App extends Component {
     listArr[this.findTarget(listArr,lkey)]=targetList;
     this.setState({
       list:listArr
-    })
+    }, this.countAll)
   }
   checkItem(lkey, ikey){
     let listArr = this.state.list;
@@ -99,7 +105,7 @@ class App extends Component {
     listArr[this.findTarget(listArr,lkey)]=targetList;
     this.setState({
       list:listArr
-    })
+    }, this.countAll)
   }
   deleteItem(lkey, ikey){
     let listArr = this.state.list;
@@ -112,6 +118,28 @@ class App extends Component {
     listArr[this.findTarget(listArr,lkey)]=targetList;
     this.setState({
       list:listArr
+    }, this.countAll)
+  }
+  countAll(){
+    let listCount = 0;
+    let itemCount = 0;
+    let itemUnfinish = 0;
+    let itemFinished = 0;
+    this.state.list.forEach(function(entry){
+      listCount++;
+      entry.item.forEach(function(inner){
+        itemCount++;
+        if(inner.isCheck===0)
+          itemUnfinish++;
+        else
+          itemFinished++;
+      })
+    })
+    this.setState({
+      listCount: listCount,
+      itemCount: itemCount,
+      itemUnfinish: itemUnfinish,
+      itemFinished: itemFinished
     })
   }
   render() {
@@ -119,10 +147,35 @@ class App extends Component {
       <div className="App">
         <header>
           <img src={logo} alt="logo" className='App-logo'/>
+
           <h1>TodoList</h1>
+          <div className="firstline">
+            <div className="count">
+              <p>
+                TotalList: {this.state.listCount}
+              </p>
+              <p>
+                TotalItem: {this.state.itemCount}
+              </p>
+              <p>
+                -Item Todo: {this.state.itemUnfinish}
+              </p>
+              <p>
+                -Item Check: {this.state.itemFinished}
+              </p>            
+            </div>
+            <input ref={(a) => this._inputElement = a}
+                  onKeyPress={
+                  (e)=>{
+                  let key= e.keyCode || e.which;
+                  if(key===13){
+                    this.onClick();
+                  }
+                }
+              }></input>
+            <button onClick={this.onClick}>Add</button>
+          </div>
         </header>
-        <input ref={(a) => this._inputElement = a}></input>
-        <button onClick={this.onClick}>Go</button>
         <div className='ListGroup'>
           <TodoList 
             listArr={this.state.list} 
